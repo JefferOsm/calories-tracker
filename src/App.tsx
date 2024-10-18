@@ -3,11 +3,14 @@ import { activityReducer,initialState } from "./reducers/activity-reducer"
 import Form from "./components/Form"
 import ActivityList from "./components/ActivityList"
 import { ChakraProvider } from '@chakra-ui/react'
+import {
+  useDisclosure,
+} from '@chakra-ui/react'
 
 
 function App() {
  const[state, dispatch]= useReducer(activityReducer,initialState)
- console.log(state)
+ const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
@@ -16,6 +19,10 @@ function App() {
           <div className=" max-w-4xl mx-auto flex justify-between">
             <ActivityList
               activities={state.activities}
+              dispatch={dispatch}
+              isOpen={isOpen}
+              onClose={onClose}
+              onOpen={onOpen}
             />
             <h1 className="text-center text-lg font-bold text-white uppercase">
               Contador de Calorias
@@ -30,6 +37,10 @@ function App() {
           <div className="max-w-4xl mx-auto">
             <Form
               dispatch={dispatch}
+              state={state}
+              isOpen={isOpen}
+              onClose={onClose}
+              onOpen={onOpen}
             />
           </div>
         </section>
